@@ -1,0 +1,64 @@
+# gym-app/docker-compose.yml
+# Configuration for gym application services with PostgreSQL and Node.js server
+# Version: 3.8
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: gym_postgres
+    environment:
+      # Load credentials from environment variables for security
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - gym_postgres_data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - gym_backend_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  node_server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: bpositive-server:latest
+    container_name: gym_node_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_USER: ${DB_USER}
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      DATABASE_NAME: ${DB_NAME}
+      DATABASE_PORT: 5432
+    volumes:
+      - ./server:/usr/src/app
+    restart: always
+    networks:
+      - gym_backend_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  gym_postgres_data:
+    driver: local
+    name: gym_postgres_data
+
+networks:
+  gym_backend_network:
+    name: gym_backend_network
+    driver: bridge

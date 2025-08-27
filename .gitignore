@@ -1,0 +1,11 @@
+# gym-app/.gitignore
+# Ignore sensitive files and directories
+creds.sh
+*.env
+node_modules/
+*.log
+data/
+client/node_modules/
+server/node_modules/
+client/package-lock/
+server/package-lock/

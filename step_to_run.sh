@@ -1,0 +1,1 @@
+source ./creds.sh && docker-compose build && docker-compose up
