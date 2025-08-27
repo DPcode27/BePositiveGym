@@ -1,0 +1,35 @@
+{
+  "development": {
+    "database": "${DB_NAME}",
+    "username": "${DB_USER}",
+    "password": "${DB_PASSWORD}",
+    "host": "${DB_HOST}",
+    "port": "${DB_PORT}",
+    "dialect": "postgres"
+  },
+  "test": {
+    "database": "${DB_NAME_TEST}",
+    "username": "${DB_USER}",
+    "password": "${DB_PASSWORD}",
+    "host": "${DB_HOST}",
+    "port": "${DB_PORT}",
+    "dialect": "postgres"
+  },
+  "stage": {
+    "database": "${DB_NAME_TEST}",
+    "username": "${DB_USER}",
+    "password": "${DB_PASSWORD}",
+    "host": "${DB_HOST}",
+    "port": "${DB_PORT}",
+    "dialect": "postgres"
+  },
+  "production": {
+    "database": "${DB_NAME}",
+    "username": "${DB_USER}",
+    "password": "${DB_PASSWORD}",
+    "host": "${DB_HOST}",
+    "port": "${DB_PORT}",
+    "dialect": "postgres",
+    "use_env_variable": "DATABASE_URL"
+  }
+}
