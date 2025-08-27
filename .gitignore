@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # gym-app/.gitignore
 # Ignore sensitive files and directories
 creds.sh
@@ -9,3 +10,8 @@ client/node_modules/
 server/node_modules/
 client/package-lock/
 server/package-lock/
+=======
+/node_modules
+.env
+/public
+>>>>>>> f9835c8dde46aeb2a32fb0e7e21402d5133575f9
